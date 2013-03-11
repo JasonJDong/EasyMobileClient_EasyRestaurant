@@ -1,0 +1,38 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EasyRestaurant.Biz.Configuration", "EasyRestaurant.Biz.Configuration", "{A81027EB-2462-473E-BBC0-BBD787F4FB01}"
+	ProjectSection(SolutionItems) = preProject
+		configuration\Database.config = configuration\Database.config
+		configuration\DataCommandFiles.config = configuration\DataCommandFiles.config
+		configuration\dcEasyRestaurant.Cooks.config = configuration\dcEasyRestaurant.Cooks.config
+		configuration\dcEasyRestaurant.Friend.config = configuration\dcEasyRestaurant.Friend.config
+		configuration\dcEasyRestaurant.Other.config = configuration\dcEasyRestaurant.Other.config
+		configuration\dcEasyRestaurant.Res.config = configuration\dcEasyRestaurant.Res.config
+		configuration\dcEasyRestaurant.Team.config = configuration\dcEasyRestaurant.Team.config
+		configuration\dcEasyRestaurant.User.config = configuration\dcEasyRestaurant.User.config
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyRestaurantBusiness", "EasyRestaurantBusiness\EasyRestaurantBusiness.csproj", "{9757F704-59DE-4E2C-86FD-1F434D7A0E72}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyRestaurantBusiness.Data", "EasyRestaurantBusiness.Data\EasyRestaurantBusiness.Data.csproj", "{83060929-DDB3-41BF-88C1-0F749118B2B2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9757F704-59DE-4E2C-86FD-1F434D7A0E72}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9757F704-59DE-4E2C-86FD-1F434D7A0E72}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9757F704-59DE-4E2C-86FD-1F434D7A0E72}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9757F704-59DE-4E2C-86FD-1F434D7A0E72}.Release|Any CPU.Build.0 = Release|Any CPU
+		{83060929-DDB3-41BF-88C1-0F749118B2B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83060929-DDB3-41BF-88C1-0F749118B2B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83060929-DDB3-41BF-88C1-0F749118B2B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{83060929-DDB3-41BF-88C1-0F749118B2B2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
