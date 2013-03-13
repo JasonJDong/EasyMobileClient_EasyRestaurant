@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{9757F704-59DE-4E2C-86FD-1F434D7A0E72}</ProjectGuid>
+    <ProjectGuid>{88F31BD5-8ACA-467A-A0C1-BE5E06FDCFC7}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>EasyRestaurantBusiness</RootNamespace>
-    <AssemblyName>EasyRestaurantBusiness</AssemblyName>
+    <RootNamespace>DMobile.Biz.DataAccess.Manager</RootNamespace>
+    <AssemblyName>DMobile.Biz.DataAccess.Manager</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -31,21 +31,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DMobile.Biz.Interface, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\share\DMobile.Biz.Interface.dll</HintPath>
-    </Reference>
-    <Reference Include="DMobile.Server.Session, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\share\DMobile.Server.Session.dll</HintPath>
-    </Reference>
     <Reference Include="DMobile.Server.Utilities, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\share\DMobile.Server.Utilities.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -53,35 +45,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EasyRestaurant.cs" />
-    <Compile Include="EasyRestaurantPrivateMethod.cs" />
+    <Compile Include="Configer.cs" />
+    <Compile Include="DatabaseDetector.cs" />
+    <Compile Include="DataCommandDetector.cs" />
+    <Compile Include="DataEntity\DataAccessException.cs" />
+    <Compile Include="DataEntity\DatabaseList.cs" />
+    <Compile Include="DataEntity\DataCommand.cs" />
+    <Compile Include="DataEntity\DataCommandFiles.cs" />
+    <Compile Include="DataEntity\DataOpertion.cs" />
+    <Compile Include="DataEntity\DataOpertion.Partial.cs" />
+    <Compile Include="DataAccessManager.cs" />
+    <Compile Include="DataEntity\Identity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SessionImpl\SessionDataBaseAccess.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DMobile.Biz.DataAccess.Manager\DMobile.Biz.DataAccess.Manager.csproj">
-      <Project>{88F31BD5-8ACA-467A-A0C1-BE5E06FDCFC7}</Project>
-      <Name>DMobile.Biz.DataAccess.Manager</Name>
-    </ProjectReference>
     <ProjectReference Include="..\DMobile.Biz.DataAccess\DMobile.Biz.DataAccess.csproj">
       <Project>{3221B663-632D-49D9-AD0D-A9C275CA089F}</Project>
       <Name>DMobile.Biz.DataAccess</Name>
     </ProjectReference>
-    <ProjectReference Include="..\EasyRestaurantBusiness.Data\EasyRestaurantBusiness.Data.csproj">
-      <Project>{83060929-DDB3-41BF-88C1-0F749118B2B2}</Project>
-      <Name>EasyRestaurantBusiness.Data</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
-    <PreBuildEvent>
-    </PreBuildEvent>
-  </PropertyGroup>
-  <PropertyGroup>
-    <PostBuildEvent>if not exist "$(TargetDir)Configuration" MD "$(TargetDir)Configuration"
-if not exist "$(TargetDir)Configuration\Data" MD "$(TargetDir)Configuration\Data"
-copy "$(SolutionDir)Configuration\*.*" "$(TargetDir)Configuration\Data"</PostBuildEvent>
-  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
