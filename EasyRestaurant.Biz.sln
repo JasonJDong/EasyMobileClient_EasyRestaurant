@@ -21,7 +21,19 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DMobile.Biz.DataAccess.Mana
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DMobile.Biz.DataAccess", "DMobile.Biz.DataAccess\DMobile.Biz.DataAccess.csproj", "{3221B663-632D-49D9-AD0D-A9C275CA089F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BizTest", "BizTest\BizTest.csproj", "{3292F70E-8BEE-49EE-9BC2-692181750834}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3F47F035-29AB-4F63-960E-902B05575B09}"
+	ProjectSection(SolutionItems) = preProject
+		EasyRestaurant.Biz.vsmdi = EasyRestaurant.Biz.vsmdi
+		Local.testsettings = Local.testsettings
+		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
+	EndProjectSection
+EndProject
 Global
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = EasyRestaurant.Biz.vsmdi
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|x86 = Debug|x86
@@ -55,6 +67,12 @@ Global
 		{3221B663-632D-49D9-AD0D-A9C275CA089F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3221B663-632D-49D9-AD0D-A9C275CA089F}.Release|x86.ActiveCfg = Release|x86
 		{3221B663-632D-49D9-AD0D-A9C275CA089F}.Release|x86.Build.0 = Release|x86
+		{3292F70E-8BEE-49EE-9BC2-692181750834}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3292F70E-8BEE-49EE-9BC2-692181750834}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3292F70E-8BEE-49EE-9BC2-692181750834}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{3292F70E-8BEE-49EE-9BC2-692181750834}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3292F70E-8BEE-49EE-9BC2-692181750834}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3292F70E-8BEE-49EE-9BC2-692181750834}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
