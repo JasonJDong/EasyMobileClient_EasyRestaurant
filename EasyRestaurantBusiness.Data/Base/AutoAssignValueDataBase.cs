@@ -31,13 +31,22 @@ namespace EasyRestaurantBusiness.Data.Base
             BuildHandle((colName, property) =>
                 {
                     Type propertyType = property.PropertyType;
-                    if (!row.Table.Columns.Contains(colName))
+                    String exists = String.Empty;
+                    foreach (DataColumn column in row.Table.Columns)
+                    {
+                        if (string.Equals(colName, column.ColumnName, StringComparison.InvariantCultureIgnoreCase))
+                        {
+                            exists = column.ColumnName;
+                            break;
+                        }
+                    }
+                    if (String.IsNullOrWhiteSpace(exists))
                     {
                         return false;
                     }
                     try
                     {
-                        var value = ChangeType(row[colName], propertyType);
+                        var value = ChangeType(row[exists], propertyType);
                         property.SetValue(this, value, null);
                     }
                     catch (Exception ex)
@@ -62,11 +71,12 @@ namespace EasyRestaurantBusiness.Data.Base
             BuildHandle((colName, property) =>
                 {
                     var propertyType = property.PropertyType;
-                    if (!CurrentTableSchemaColumnsName.Contains(colName))
+                    var exists = CurrentTableSchemaColumnsName.Find(s => String.Equals(s, colName, StringComparison.InvariantCultureIgnoreCase));
+                    if (String.IsNullOrWhiteSpace(exists))
                     {
                         return false;
                     }
-                    var index = reader.GetOrdinal(colName);
+                    var index = reader.GetOrdinal(exists);
                     try
                     {
                         if (reader.IsDBNull(index))
@@ -175,9 +185,10 @@ namespace EasyRestaurantBusiness.Data.Base
             {
                 return string.Empty;
             }
-            if (TypeParameterMappingCache[type].ContainsKey(param))
+            string columName = string.Empty;
+            if (TypeParameterMappingCache[type].TryGetValue(param, out columName))
             {
-                return TypeParameterMappingCache[type][param];
+                return columName;
             }
             return string.Empty;
         }
