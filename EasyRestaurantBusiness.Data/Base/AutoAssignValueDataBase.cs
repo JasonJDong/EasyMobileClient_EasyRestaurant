@@ -18,6 +18,11 @@ namespace EasyRestaurantBusiness.Data.Base
 
         private readonly List<String> CurrentTableSchemaColumnsName = new List<string>();
 
+        private static readonly Type ConvertibleType = typeof (IConvertible);
+        private static readonly Type EnumType = typeof(Enum);
+        private static readonly Type StringType = typeof(string);
+
+
         [NotColumn]
         internal BusinessEntityErrorHandle Error { get; set; }
 
@@ -142,23 +147,24 @@ namespace EasyRestaurantBusiness.Data.Base
             if (value == null)
                 return null;
 
-            if (value.GetType() == conversionType)
+            var valueType = value.GetType();
+            if (valueType == conversionType)
             {
                 return value;
             }
 
-            if (conversionType == typeof(string))
+            if (conversionType == StringType)
                 return value.ToString();
 
             try
             {
-                if (value is IConvertible)
+                if (ConvertibleType.IsAssignableFrom(valueType))
                 {
-                    if (conversionType.BaseType != typeof(Enum))
+                    if (conversionType.BaseType == EnumType)
                     {
-                        return Convert.ChangeType(value, conversionType);
+                        return Enum.Parse(conversionType, value.ToString());
                     }
-                    return Enum.Parse(conversionType, value.ToString());
+                    return Convert.ChangeType(value, conversionType);
                 }
                 return null;
             }
@@ -170,23 +176,26 @@ namespace EasyRestaurantBusiness.Data.Base
 
         private void AddTypeParameterCache(Type type, string param, string colName)
         {
-            if (!TypeParameterMappingCache.ContainsKey(type))
+            Dictionary<string, string> cache;
+            if (!TypeParameterMappingCache.TryGetValue(type, out cache))
             {
                 var paramMapping = new Dictionary<string, string> { { param, colName } };
                 TypeParameterMappingCache.Add(type, paramMapping);
                 return;
             }
-            TypeParameterMappingCache[type].Add(param, colName);
+            cache.Add(param, colName);
         }
 
         private string GetTypeParameterColumnName(Type type, string param)
         {
-            if (!TypeParameterMappingCache.ContainsKey(type))
+
+            Dictionary<string, string> cache;
+            if (!TypeParameterMappingCache.TryGetValue(type, out cache))
             {
                 return string.Empty;
             }
-            string columName = string.Empty;
-            if (TypeParameterMappingCache[type].TryGetValue(param, out columName))
+            string columName;
+            if (cache.TryGetValue(param, out columName))
             {
                 return columName;
             }
