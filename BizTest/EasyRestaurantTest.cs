@@ -14,8 +14,19 @@ namespace BizTest
         [TestMethod]
         public void TestLoginForSession()
         {
-            var user = easyRestaurant.LoginForSession("dong", "12345");
-            Assert.IsNotNull(user.Session);
+            //var user = easyRestaurant.LoginForSession("admin", "");
+            //Assert.IsNotNull(user.Session);
+            var s = "{"+
+  "\"MealTime\" : \"2013/05/22 10:56:56\","+
+  "\"HolderID\" : \"admin\","+
+  "\"TeamUseRestaurantID\" : \"rrrr\"," +
+            "\"TeamName\" : \"我的队伍\"," +
+            "\"TeamID\" : \"00000000000000000000000000000000\"," +
+            "\"MaxPeopleNumber\" : \"8\"," +
+            "\"AliveStatus\" : \"0\"," +
+            "\"TeamAffordStyle\" : \"0\"" +
+            "}";
+            Console.WriteLine(s.Length);
         }
     }
 }

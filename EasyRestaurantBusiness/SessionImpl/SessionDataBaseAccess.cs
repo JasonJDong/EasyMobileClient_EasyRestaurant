@@ -21,7 +21,8 @@ namespace EasyRestaurantBusiness.SessionImpl
             bool result = false;
             DataAccessManager.ExecuteCommand("IsSessionExists", cmd =>
                 {
-                    result = cmd.ExecuteScalar<bool>(new {Session = session.SessionText});
+                    var exists = cmd.ExecuteScalar<String>(new {Session = session.SessionText});
+                    bool.TryParse(exists, out result);
                 });
             return result;
         }

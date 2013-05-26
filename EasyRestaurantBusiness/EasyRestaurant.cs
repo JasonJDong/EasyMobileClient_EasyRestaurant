@@ -170,17 +170,20 @@ namespace EasyRestaurantBusiness
 
         public string OperationUserPoints(ERUserEntity entity, string operationType)
         {
-            return OperationInvoke("OperationUserPoints", entity, operationType) != 0 ? entity.UserID : string.Empty;
+            var success = OperationInvoke("OperationUserPoints", entity, operationType);
+            return success ? entity.UserID : string.Empty;
         }
 
         public string OperationUserPriority(ERUserCookBooksPriority entity, string operationType)
         {
-            return OperationInvoke("OperationUserPriority", entity, operationType) != 0 ? entity.UserID : string.Empty;
+            var success = OperationInvoke("OperationUserPriority", entity, operationType);
+            return success ? entity.UserID : string.Empty;
         }
 
         public string OperationUserConfig(ERUserConfig entity, string operationType)
         {
-            return OperationInvoke("OperationUserConfig", entity, operationType) != 0 ? entity.UserID : string.Empty;
+            var success = OperationInvoke("OperationUserConfig", entity, operationType);
+            return success ? entity.UserID : string.Empty;
         }
         #endregion
 
@@ -198,7 +201,14 @@ namespace EasyRestaurantBusiness
             {
                 entity.TeamID = UniqueIDProvider.GetUniqueID();
             }
-            return OperationInvoke("OperationTeam", entity, operationType) != 0 ? entity.TeamID : string.Empty;
+            var success = OperationInvoke("OperationTeamDetail", entity, operationType);
+
+            DataAccessManager.ExecuteCommand("IsTeamsExists", cmd =>
+            {
+                var exists = cmd.ExecuteScalar<String>(new { TeamID = entity.TeamID });
+                bool.TryParse(exists, out success);
+            });
+            return success ? entity.TeamID : string.Empty;
         }
 
         /// <summary>
@@ -237,12 +247,14 @@ namespace EasyRestaurantBusiness
 
         public string OperationTeamOperation(ERTeamOperationEntity entity, string operationType)
         {
-            return OperationInvoke("OperationTeamOperation", entity, operationType) != 0 ? entity.TeamID : string.Empty;
+            var success = OperationInvoke("OperationTeamOperation", entity, operationType);
+            return success ? entity.TeamID : string.Empty;
         }
 
         public string OperationTeamAdvanced(ERTeamDetailEntity entity, string operationType)
         {
-            return OperationInvoke("OperationTeamAdvanced", entity, operationType) != 0 ? entity.TeamID : string.Empty;
+            var success = OperationInvoke("OperationTeamAdvanced", entity, operationType);
+            return success ? entity.TeamID : string.Empty;
         }
         #endregion
 
@@ -274,7 +286,8 @@ namespace EasyRestaurantBusiness
             {
                 entity.RestaurantID = UniqueIDProvider.GetUniqueID();
             }
-            return OperationInvoke("OperationRestaurantBase", entity, operationType) != 0 ? entity.RestaurantID : string.Empty;
+            var success = OperationInvoke("OperationRestaurantBase", entity, operationType);
+            return success ? entity.RestaurantID : string.Empty;
         }
 
         /// <summary>
@@ -285,12 +298,14 @@ namespace EasyRestaurantBusiness
         /// <returns></returns>
         public string OperationRestaurantCook(ERRestaurantCookEntity entity, string operationType)
         {
-            return OperationInvoke("OperationRestaurantCook", entity, operationType) != 0 ? entity.RestaurantID : string.Empty;
+            var success = OperationInvoke("OperationRestaurantCook", entity, operationType);
+            return success ? entity.RestaurantID : string.Empty;
         }
 
         public string OperationRestaurantComment(ERRestaurantComment entity, string operationType)
         {
-            return OperationInvoke("OperationRestaurantComment", entity, operationType) != 0 ? entity.RestaurantID : string.Empty;
+            var success = OperationInvoke("OperationRestaurantComment", entity, operationType);
+            return success ? entity.RestaurantID : string.Empty;
         }
         #endregion
 
@@ -313,7 +328,8 @@ namespace EasyRestaurantBusiness
         /// <returns></returns>
         public string OperationFriend(ERFriendEntity entity, string operationType)
         {
-            return OperationInvoke("OperationFriend", entity, operationType) != 0 ? entity.FriendId : string.Empty;
+            var success = OperationInvoke("OperationFriend", entity, operationType);
+            return success ? entity.FriendId : string.Empty;
         }
 
         /// <summary>
@@ -340,12 +356,14 @@ namespace EasyRestaurantBusiness
             {
                 entity.Code = UniqueIDProvider.GetUniqueID();
             }
-            return OperationInvoke("OperationCookDetail", entity, operationType) != 0 ? entity.Code : string.Empty;
+            var success = OperationInvoke("OperationCookDetail", entity, operationType);
+            return success ? entity.Code : string.Empty;
         }
 
         public string OperationCookComment(ERCookCommentEntity entity, string operationType)
         {
-            return OperationInvoke("OperationCookComment", entity, operationType) != 0 ? entity.CookCode : string.Empty;
+            var success = OperationInvoke("OperationCookComment", entity, operationType);
+            return success ? entity.CookCode : string.Empty;
         }
 
         /// <summary>
@@ -398,7 +416,8 @@ namespace EasyRestaurantBusiness
         /// <returns></returns>
         public string OperationAdvice(AdvicesEntity entity, string operationType)
         {
-            return OperationInvoke("OperationAdvice", entity, operationType) != 0 ? entity.UserID : string.Empty;
+            var success = OperationInvoke("OperationAdvice", entity, operationType);
+            return success ? entity.UserID : string.Empty;
         }
 
         public List<AdvicesEntity> GetAdvicesFromRangeDate(DateTime from, DateTime end, string userId, string pwd)
@@ -437,15 +456,24 @@ namespace EasyRestaurantBusiness
 
         #region Private Method
 
-        private int OperationInvoke<T>(string cmdName, T entity, string operationType)
+        private bool OperationInvoke<T>(string cmdName, T entity, string operationType)
         {
-            int returnValue = 0;
+            var opSuccess = true;
             DataAccessManager.ExecuteCommand(cmdName, cmd =>
             {
-                dynamic o = new { Entity = entity, OpType = operationType };
-                returnValue = cmd.ExecuteNonQuery(o);
+                try
+                {
+                    dynamic o = new { Entity = entity, OpType = operationType };
+                    cmd.ExecuteNonQuery(o);
+                }
+                catch (Exception)
+                {
+                    opSuccess = false;
+                }
+
             });
-            return returnValue;
+
+            return opSuccess;
         }
 
         private List<T> GetEntityList<T>(string cmdName, dynamic param) where T : AutoAssignValueDataBase
